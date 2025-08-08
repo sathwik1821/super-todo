@@ -5,6 +5,7 @@ import TodoItem from './TodoItem';
 const TodoPage = () => {
 
   const [todos,setTodos]=useState([]);
+
   function handleOnSubmit(e){
     e.preventDefault();
 
@@ -48,6 +49,7 @@ const TodoPage = () => {
         <input type="text"  name="todo" placeholder='Enter your Todo here...'/>
         <button>Submit</button>
 
+        
         <div>
           {
             todos.map((item)=>
