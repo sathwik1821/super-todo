@@ -55,7 +55,37 @@ const TodoPage = () => {
     newTodos.sort(compareFunction);
     setTodos(newTodos);
   }
+
+
+  function handleEditTodo(id,todoText){
+    const newTodos=todos.map((item)=>{
+      if(item.id==id)
+      {
+        return {...item,text:todoText}
+      }
+      return item
+    })
+
+    setTodos(newTodos)
+
+
+  }
   
+
+  function handleOnMoveUp(index){
+    const newTodos=[...todos];
+    [newTodos[index],newTodos[index-1]]=[newTodos[index-1],newTodos[index]];
+
+    setTodos(newTodos);
+  }
+
+  function handleOnMoveDown(index){
+    const newTodos=[...todos];
+    [newTodos[index],newTodos[index+1]]=[newTodos[index+1],newTodos[index]];
+
+    setTodos(newTodos);
+  }
+
 
   const emptyState=<h2>No Tasks Added...Add Now...</h2>
 
@@ -78,27 +108,33 @@ const TodoPage = () => {
       <form action="" onSubmit={handleOnSubmit}>
         <input type="text"  name="todo" placeholder='Enter your Todo here...'/>
         <button>Submit</button>
-
-        {totalTodos==0 ? emptyState :
-
-          <div>
-            {!isSorted(todos,compareFunction) && <button type='button' onClick={handleSortTodos}>Sort All</button>}
-            <button  type="button" onClick={handleDeleteAll}>Delete All</button>
-            <div>{`${completedTodos.length} tasks out of ${totalTodos} tasks completed`}</div>
-          {
-            
-            todos.map((item)=>
-            (
-                <TodoItem key={item.id} item={item}
-                handleTodoComplete={handleTodoComplete} 
-                handleDelete={handleDelete}
-                />
-            ))
-          }
-          </div>
-        }
       </form>
-    </div>
+
+      {totalTodos==0 ? emptyState :
+
+        <div>
+          {!isSorted(todos,compareFunction) && <button type='button' onClick={handleSortTodos}>Sort All</button>}
+
+          <button  type="button" onClick={handleDeleteAll}>Delete All</button>
+          <div>{`${completedTodos.length} tasks out of ${totalTodos} tasks completed`}</div>
+        {
+          
+          todos.map((item,index)=>
+          (
+              <TodoItem key={item.id} item={item}
+              handleTodoComplete={handleTodoComplete} 
+              handleDelete={handleDelete}
+              handleEditTodo={handleEditTodo}
+              handleOnMoveUp={handleOnMoveUp}
+              handleOnMoveDown={handleOnMoveDown}
+              todosCount={totalTodos}
+              index={index}
+              />
+          ))
+        }
+        </div>
+        }
+      </div>
   )
 }
 
