@@ -40,8 +40,12 @@ const TodoPage = () => {
     setTodos(newTodos)
   }
 
+  const emptyState=<h2>No Tasks Added...Add Now...</h2>
+
+  const totalTodos=todos.length;
 
   return (
+    
     <div>
       <h1>Super Todo</h1>
 
@@ -49,18 +53,22 @@ const TodoPage = () => {
         <input type="text"  name="todo" placeholder='Enter your Todo here...'/>
         <button>Submit</button>
 
-        
-        <div>
+        {totalTodos==0 ? emptyState :
+
+          <div>
           {
             todos.map((item)=>
             (
                 <TodoItem key={item.id} item={item}
-                 handleTodoComplete={handleTodoComplete} 
-                 handleDelete={handleDelete}
+                handleTodoComplete={handleTodoComplete} 
+                handleDelete={handleDelete}
                 />
             ))
           }
-        </div>
+          </div>
+        }
+        
+        
       </form>
     </div>
   )
