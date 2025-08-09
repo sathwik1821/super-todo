@@ -1,6 +1,10 @@
 import React from 'react'
 import {useState} from 'react'
 import TodoItem from './TodoItem';
+import { Plus } from 'lucide-react';
+import { Trash } from 'lucide-react';
+import { Rabbit } from 'lucide-react';
+
 
 const TodoPage = () => {
 
@@ -87,7 +91,10 @@ const TodoPage = () => {
   }
 
 
-  const emptyState=<h2>No Tasks Added...Add Now...</h2>
+  const emptyState=<div className='flex flex-col gap-4 justify-center items-center font-extralight'>
+    <Rabbit />
+    <p>Add tasks to continue</p>
+  </div>
 
   function isSorted(arr, compareFn) {
     return arr.every((value, index, array) => {
@@ -102,40 +109,60 @@ const TodoPage = () => {
 
   return (
     
-    <div>
-      <h1>Super Todo</h1>
+    <div className='container max-w-2xl mx-auto p-8  flex flex-col justify-center items-center  text-white space-y-6 '>
+      <h1 className='text-6xl text-accent font-display font-bold'>Super Todo</h1>
+      <p className=' italic font-light'>Manages your todos with Ease!</p>
 
-      <form action="" onSubmit={handleOnSubmit}>
-        <input type="text"  name="todo" placeholder='Enter your Todo here...'/>
-        <button>Submit</button>
+
+      <form action="" onSubmit={handleOnSubmit} className='bg-gray-700 px-10 py-2.5 rounded-sm flex justify-btweeen gap-4  '>
+        <input type="text"  name="todo" placeholder='Enter your Todo here...' className='focus:outline-none font-sans' />
+        <button className='cursor-pointer bg-accent text-black p-2 rounded-lg hover:bg-accent-light'><Plus /></button>
       </form>
-
+     
       {totalTodos==0 ? emptyState :
 
-        <div>
-          {!isSorted(todos,compareFunction) && <button type='button' onClick={handleSortTodos}>Sort All</button>}
+        <div className="space-y-4">
+          <div className="flex gap-4 ">
+            {!isSorted(todos, compareFunction) && (
+              <button
+                type="button"
+                onClick={handleSortTodos}
+                className="px-4 py-2 ring-2 ring-yellow-300 hover:bg-yellow-300 hover:text-black transition rounded-lg cursor-pointer ml-auto"
+              >
+                Sort All
+              </button>
+            )}
 
-          <button  type="button" onClick={handleDeleteAll}>Delete All</button>
-          <div>{`${completedTodos.length} tasks out of ${totalTodos} tasks completed`}</div>
-        {
-          
-          todos.map((item,index)=>
-          (
-              <TodoItem key={item.id} item={item}
-              handleTodoComplete={handleTodoComplete} 
-              handleDelete={handleDelete}
-              handleEditTodo={handleEditTodo}
-              handleOnMoveUp={handleOnMoveUp}
-              handleOnMoveDown={handleOnMoveDown}
-              todosCount={totalTodos}
-              index={index}
-              />
-          ))
-        }
-        </div>
+            <button
+              type="button"
+              onClick={handleDeleteAll}
+              className="px-4 py-2 ring-2 ring-red-700 hover:bg-red-700 hover:text-black transition rounded-lg flex gap-2 cursor-pointer ml-auto mr-10"
+            >
+              <Trash />
+              Delete All
+            </button>
+          </div>
+
+          <div className='ml-65'>{`${completedTodos.length}/${totalTodos} completed`}</div>
+          {
+            
+            todos.map((item,index)=>
+            (
+                <TodoItem key={item.id} item={item} 
+                handleTodoComplete={handleTodoComplete} 
+                handleDelete={handleDelete}
+                handleEditTodo={handleEditTodo}
+                handleOnMoveUp={handleOnMoveUp}
+                handleOnMoveDown={handleOnMoveDown}
+                todosCount={totalTodos}
+                index={index}
+                />
+            ))
+          }
+          </div>
         }
       </div>
   )
 }
 
-export default TodoPage
+export default TodoPage 
