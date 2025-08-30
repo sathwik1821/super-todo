@@ -90,18 +90,19 @@ const TodoPage = () => {
     setTodos(newTodos);
   }
 
-
-  const emptyState=<div className='flex flex-col gap-4 justify-center items-center font-extralight'>
-    <Rabbit />
-    <p>Add tasks to continue</p>
-  </div>
-
   function isSorted(arr, compareFn) {
     return arr.every((value, index, array) => {
       return index === 0 || compareFn(array[index - 1], value) <= 0;
     });
   }
 
+
+  const emptyState=<div className='flex flex-col gap-4 justify-center items-center font-extralight'>
+    <Rabbit />
+    <p>Add tasks to continue</p>
+  </div>
+
+ 
 
   const totalTodos=todos.length;
 
